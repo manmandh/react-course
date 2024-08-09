@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 
 function Counter1() {
   const [count, setCount] = useState(0);
@@ -123,7 +123,7 @@ useEffect(() => {
   const timerID = setInterval(() => {
     console.log('Tick');
   }, 1000);
-  
+
   return () => {
     clearInterval(timerID);
   };
@@ -240,3 +240,139 @@ export const Quiz: React.FC = () => {
     </form>
   );
 }
+
+type FormData = {
+  username: string;
+  email: string;
+  password: string;
+};
+
+export const MyForm: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    email: '',
+    password: '',
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log('Form submitted:', formData);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Username:
+          <input
+            type="text"
+            name="username"
+            value={formData.username}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Email:
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <div>
+        <label>
+          Password:
+          <input
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+        </label>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+
+export const UncontrolledForm: React.FC = () => {
+  const usernameRef = useRef<HTMLInputElement>(null);
+  const emailRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const username = usernameRef.current?.value;
+    const email = emailRef.current?.value;
+    console.log('Uncontrolled Form Submitted:', { username, email });
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Username:
+          <input type="text" ref={usernameRef} />
+        </label>
+      </div>
+      <div>
+        <label>
+          Email:
+          <input type="email" ref={emailRef} />
+        </label>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export const SimpleUncontrolledForm: React.FC = () => {
+  const passwordRef = useRef<HTMLInputElement>(null);
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const password = passwordRef.current?.value;
+    console.log('Password Submitted:', password);
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <label>
+          Password:
+          <input type="password" ref={passwordRef} />
+        </label>
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export const RefForm: React.FC = () => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  const focusInput = () => {
+    inputRef.current?.focus();
+  };
+
+  return (
+    <div>
+      <input type="text" ref={inputRef} />
+      <button onClick={focusInput}>Focus the input</button>
+    </div>
+  );
+};
+
+
