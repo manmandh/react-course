@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState } from 'react';
+import React, {ReactNode, useEffect, useRef, useState } from 'react';
 
 function Counter1() {
   const [count, setCount] = useState(0);
@@ -374,5 +374,97 @@ export const RefForm: React.FC = () => {
     </div>
   );
 };
+
+// chapter 8: scaling react components
+
+interface GreetingProps {
+  name: string;
+}
+
+const Greetingg: React.FC<GreetingProps> = ({ name }) => {
+  return <h1>Hello, {name}!</h1>;
+};
+
+// Correct usage
+<Greetingg name="John" /> // No error, renders "Hello, John!"
+
+// Incorrect usage
+// <Greetingg /> // Error: Property 'name' is missing
+
+
+// rendering children
+interface ContainerProps {
+  children: ReactNode;
+}
+
+const Container: React.FC<ContainerProps> = ({ children }) => {
+  return <div className="container">{children}</div>;
+};
+
+// Usage
+<Container>
+  <h1>Title</h1>
+  <p>This is a paragraph inside the container.</p>
+</Container>
+
+//Creating React Higher-Order Components for Code Reuse
+const withLogger = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+  const WithLogger: React.FC<P> = (props) => {
+    React.useEffect(() => {
+      console.log('Component mounted:', WrappedComponent.displayName || WrappedComponent.name);
+    }, []);
+    return <WrappedComponent {...props} />;
+  };
+
+  return WithLogger;
+};
+
+interface MyComponentProps {
+  message: string;
+}
+
+const MyComponent: React.FC<MyComponentProps> = ({ message }) => {
+  return <div>{message}</div>;
+};
+
+const MyComponentWithLogger = withLogger(MyComponent);
+// Usage
+<MyComponentWithLogger message="Hello World" />
+
+
+const MyComponent2 = () => <div>Hello World</div>;
+MyComponent2.displayName = 'CustomComponentName';
+// Usage
+console.log(MyComponent2.displayName);
+
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement>{
+  label: string;
+}
+const Button: React.FC<ButtonProps> = (props) => {
+  return <button {...props}>{props.label}</button>
+}
+// Usage
+<Button label="Click Me" onClick={() => alert('Clicked!')} />
+
+const withExtraProps = <P extends object>(WrappedComponent: React.ComponentType<P>) => {
+  const WithExtraProps: React.FC<P> = (props) => {
+    const newProps = { extraProp: 'This is an extra prop!' };
+    return <WrappedComponent {...props} {...newProps} />;
+  };
+  return WithExtraProps;
+};
+
+interface SimpleComponentProps {
+  extraProp?: string;
+}
+
+const SimpleComponent: React.FC<SimpleComponentProps> = ({ extraProp }) => (
+  <div>{extraProp}</div>
+);
+
+const EnhancedComponent = withExtraProps(SimpleComponent);
+<EnhancedComponent />
+
+
 
 

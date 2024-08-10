@@ -1,14 +1,14 @@
 function ToDoList(){
-    return (
-        <>
-            <ul>
-                <li>a</li>
-                <li>b</li>
-                <li>c</li>
-                <li>d</li>
-            </ul>
-        </>
-    )
+  return (
+    <>
+      <ul>
+        <li>a</li>
+        <li>b</li>
+        <li>c</li>
+        <li>d</li>
+      </ul>
+    </>
+  )
 }
 
 export default ToDoList

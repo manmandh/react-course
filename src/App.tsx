@@ -1,4 +1,3 @@
-import './App.css'
 import ToDoList from './todolist'
 
 function App() {
@@ -11,4 +10,3 @@ function App() {
 }
 
 export default App
-
