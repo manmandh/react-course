@@ -466,5 +466,3 @@ const EnhancedComponent = withExtraProps(SimpleComponent);
 <EnhancedComponent />
 
 
-
-
