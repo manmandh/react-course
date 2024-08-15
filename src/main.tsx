@@ -1,14 +1,22 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
-import { TodoListContainer } from './Todo.tsx'
-import { ToDoApp } from './ToDoApp.tsx'
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
+import store from './store';
+import './index.css';
+import MovieList from './MovieList';
+import AddMovie from './AddMovie';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <TodoListContainer/>
+  <React.StrictMode>\
+    {/* <TodoListContainer/>
     <App />
-    <ToDoApp/>
-  </React.StrictMode>,
-)
+    <ToDoApp/> */}
+    <Provider store={store}>
+      <div>
+        <h1>Netflix Clone</h1>
+        <AddMovie />
+        <MovieList />
+      </div>
+    </Provider>
+  </React.StrictMode>
+);
