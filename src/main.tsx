@@ -5,6 +5,7 @@ import store from './store';
 import './index.css';
 import MovieList from './MovieList';
 import AddMovie from './AddMovie';
+import { UseEffect, UseRef } from './test';
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>\
@@ -18,5 +19,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <MovieList />
       </div>
     </Provider>
+    <UseEffect/>
+    <UseRef/>
   </React.StrictMode>
 );
