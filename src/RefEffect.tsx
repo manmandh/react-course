@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import React, { FC, useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 export const Component1: React.FC = () => {
   const [count, setCount] = useState(0);
@@ -33,3 +33,43 @@ export const Component2: React.FC = () => {
     </div>
   );
 };
+
+export const Component3: FC = () => {
+  const [count, setCount] = useState(0)
+
+  function fibonacci(n: number): number {
+    if (n <= 1) {
+      return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+  }
+  const fibo = useMemo(() => fibonacci(40), [])
+  console.log('dat khung');
+
+  return (
+    <div>
+      <p>Count is: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Click</button>
+    </div>
+  )
+}
+
+export const Component4: FC = () => {
+  const [count, setCount] = useState(0)
+
+  const fibonacci = (n: number): number => {
+    if (n <= 1) {
+      return n;
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2);
+  }
+  const fibo = useCallback(() => fibonacci(37 + count), [])
+  console.log('dat khung');
+
+  return (
+    <div>
+      <p>Count is: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Click</button>
+    </div>
+  )
+}
